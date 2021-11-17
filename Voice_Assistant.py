@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import speech_recognition as sr
 import wikipedia
 import webbrowser
+import pyjokes
 import os
 import smtplib
 import requests
@@ -118,3 +119,8 @@ if __name__=="__main__" :
             data = BeautifulSoup(r.text,"html.parser")
             temp = data.find("div",class_="BNeawe").text
             speak(f"current{search} is {temp}")
+
+        elif "joke" in query:
+            joke=pyjokes.get_joke(language='en', category= 'all')
+            speak(joke)
+           
