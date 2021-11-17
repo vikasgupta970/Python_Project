@@ -2,13 +2,15 @@ import pyttsx3
 import pyaudio
 import datetime
 from requests.models import ContentDecodingError
+from bs4 import BeautifulSoup
 import speech_recognition as sr
 import wikipedia
 import webbrowser
 import os
 import smtplib
-
-from wikipedia.wikipedia import random
+import requests
+import bs4
+from wikipedia.wikipedia import random, search
 
 engine = pyttsx3.init('sapi5')
 voices=engine.getProperty('voices')
@@ -108,3 +110,11 @@ if __name__=="__main__" :
         elif 'open u m s'in query:
             speak("Opening U..M..S ")
             webbrowser.open("https://ums.lpu.in/lpuums/")
+
+        elif "temperature" in query:
+            search="temprature in phagwara"
+            url = f"https://www.google.com/search?q={search}"
+            r = requests.get(url)
+            data = BeautifulSoup(r.text,"html.parser")
+            temp = data.find("div",class_="BNeawe").text
+            speak(f"current{search} is {temp}")
